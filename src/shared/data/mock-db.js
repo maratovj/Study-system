@@ -75,18 +75,18 @@ export const MOCK_DATABASE = {
     {
       id: "mm-003",
       title: {
-        ru: "Прежде всего понимай",
-        uz: "Birinchi navbatda tushun",
+        ru: "Прежде всего, поймите",
+        uz: "Avvalo, tushunib oling",
         en: "First of all, understand"
       },
       summary: {
-        ru: "Не пытайся зазубривать концепции, идеи, термины. Это энергозатратный, но малоэффективный способ учиться чему-то.",
-        uz: "Tushunchalarni, g'oyalarni, terminlarni yodlashga harakat qilma. Bu biror nimani o'rganishda ko'p quvvat oladigan, lekin samarasi kam bo'lgan uslub",
+        ru: "Не пытайтесь заучивать понятия, идеи и термины механически. Это энергозатратный, но неэффективный способ обучения.",
+        uz: "Tushuncha, g‘oya va atamalarni shunchaki yodlab olishga urinmang. Bu — ko‘p kuch talab qiladigan, ammo samarasiz o‘rganish usulidir.",
         en: "Don't try to rote-learn concepts, ideas, and terms. It is an energy-intensive yet ineffective way to learn."
       },
       details: {
-        ru: "Ты уже достаточно знаешь информации. Чтобы понять новую тему, достаточно сверять его со старой информацией.",
-        uz: "Sen o'zi yetarlicha ma'lumotlarga egasan. Yangi mavzuni shunchaki eski bilimlaring bilan solishtirish kerak.",
+        ru: "У вас уже достаточно информации. Вам нужно просто сопоставить новую тему с имеющимися у вас знаниями.",
+        uz: "Sizda allaqachon yetarli ma'lumot bor. Shunchaki yangi mavzuni mavjud bilimlaringiz bilan taqqoslashingiz kerak.",
         en: "You already have sufficient information. You simply need to compare the new topic with your existing knowledge."
       },
       category: "thinking"
