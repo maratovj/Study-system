@@ -71,6 +71,25 @@ export const MOCK_DATABASE = {
         en: "At an early stage, prefer decisions that keep the next steps open."
       },
       category: "thinking"
+    },
+    {
+      id: "mm-003",
+      title: {
+        ru: "Прежде всего понимай",
+        uz: "Birinchi navbatda tushun",
+        en: "First of all, understand"
+      },
+      summary: {
+        ru: "Не пытайся зазубривать концепции, идеи, термины. Это энергозатратный, но малоэффективный способ учиться чему-то.",
+        uz: "Tushunchalarni, g'oyalarni, terminlarni yodlashga harakat qilma. Bu biror nimani o'rganishda ko'p quvvat oladigan, lekin samarasi kam bo'lgan uslub",
+        en: "Don't try to rote-learn concepts, ideas, and terms. It is an energy-intensive yet ineffective way to learn."
+      },
+      details: {
+        ru: "Ты уже достаточно знаешь информации. Чтобы понять новую тему, достаточно сверять его со старой информацией.",
+        uz: "Sen o'zi yetarlicha ma'lumotlarga egasan. Yangi mavzuni shunchaki eski bilimlaring bilan solishtirish kerak.",
+        en: "You already have sufficient information. You simply need to compare the new topic with your existing knowledge."
+      },
+      category: "thinking"
     }
   ],
   blogPosts: [
