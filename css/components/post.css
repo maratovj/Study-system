@@ -1,0 +1,23 @@
+.post {
+  max-width: var(--measure);
+}
+
+.post__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  color: var(--color-accent-personal);
+}
+
+.post__meta > * + * {
+  margin-top: 0;
+}
+
+.post__title {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.post p {
+  margin-bottom: 0;
+}

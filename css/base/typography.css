@@ -1,0 +1,17 @@
+body {
+  text-rendering: optimizeLegibility;
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+small {
+  font-size: var(--fs-00);
+}
+
+::selection {
+  background: var(--c-hazard);
+  color: var(--c-concrete-900);
+}

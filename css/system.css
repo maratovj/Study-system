@@ -1,0 +1,446 @@
+/**
+ * system.css — дизайн-система «Персональная система обучения»
+ * ------------------------------------------------------------------
+ * Этот файл — фундамент (токены + примитивы), а НЕ финальный манифест стилей.
+ * Он не заменяет css/main.css и css/components/* из STRUCTURE.md, а лежит
+ * под ними: main.css должен подключать этот файл первым, а компонентные
+ * файлы (header.css, card.css, lab-item.css, post.css, i18n-select.css...)
+ * — использовать переменные и примитивы отсюда вместо того, чтобы заново
+ * объявлять цвета/отступы числами.
+ *
+ * Философия и обоснование каждого решения — в DESIGN.md. Здесь только код.
+ *
+ * Содержание файла:
+ *   1. Цветовые токены
+ *   2. Типографика (шрифты + модульная шкала)
+ *   3. Отступы (spacing scale)
+ *   4. Границы, тени, радиусы
+ *   5. Сетка / контейнер / брейкпоинты (как комментарий-справка)
+ *   6. Z-index шкала
+ *   7. Глобальные базовые правила (фон, текст, фокус, reduced-motion)
+ *   8. BEM-примитивы: .container, .grid, .btn, .tag, .card, .divider,
+ *      .link, .meta, .field
+ * ------------------------------------------------------------------
+ */
+
+/* ==================================================================
+   1. ЦВЕТОВЫЕ ТОКЕНЫ
+   Тёмная тема — единственная в MVP (см. DESIGN.md, 3.2).
+   Переменные вынесены в :root, а не захардкожены, чтобы светлая тема
+   в будущем добавлялась переопределением этого блока.
+   ================================================================== */
+:root {
+  /* база / бетон */
+  --c-concrete-900: #000000; /* фон приложения */
+  --c-concrete-700: #2a2924; /* третичная поверхность / hover-подложка */
+  --c-concrete-800: #343a40; /* поверхности: карточки, шапка, футер, поля */
+
+  /* текст / "бумага" */
+  --c-bone: #ece7da; /* основной текст, структурные обводки */
+  --c-bone-dim: #a6a296; /* вторичный текст, плейсхолдеры, мета */
+  --c-bone-faint: rgba(236, 231, 218, 0.14); /* волосяные линии */
+
+  /* смысловые акценты (см. DESIGN.md, 3.1 — матрица идеи → цвет) */
+  --c-hazard: #ab87ff; /* процесс / Лаборатория */
+  --c-hazard-dim: #7a2c11; /* приглушённый hazard для фона штампа/hover */
+  --c-signal: #3fd6b0; /* результат / Mental Models, Объяснения */
+  --c-signal-dim: #185b49;
+  --c-marginalia: #c0563a; /* личное / Блог */
+  --c-marginalia-dim: #5c2a1c;
+
+  /* семантические алиасы — использовать в компонентах вместо "сырых" цветов */
+  --color-bg: var(--c-concrete-900);
+  --color-surface: var(--c-concrete-800);
+  --color-surface-raised: var(--c-concrete-700);
+  --color-text: var(--c-bone);
+  --color-text-dim: var(--c-bone-dim);
+  --color-accent-lab: var(--c-hazard);
+  --color-accent-result: var(--c-signal);
+  --color-accent-personal: var(--c-marginalia);
+  --color-focus-ring: var(--c-bone);
+}
+
+/* ==================================================================
+   2. ТИПОГРАФИКА
+   IBM Plex Mono — заголовки, лейблы, мета, штампы (см. DESIGN.md, 2.2).
+   IBM Plex Sans — основной текст записей.
+   Шрифты подключаются локально (self-host, woff2) — без внешних CDN,
+   в соответствии с "No-Build / Minimal-Build" из STRUCTURE.md.
+   Если файлы шрифтов ещё не добавлены в /assets/fonts/, стек безопасно
+   откатывается на системные шрифты — макет не ломается.
+   ================================================================== */
+:root {
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* модульная шкала, база 16px, коэффициент 1.25 (major third) */
+  --fs-00: 0.8rem; /* 12.8px — мета, id, даты, штампы */
+  --fs-0: 1rem; /* 16px — базовый текст */
+  --fs-1: 1.25rem; /* 20px — подзаголовки карточек */
+  --fs-2: 1.563rem; /* 25px — заголовок раздела внутри страницы */
+  --fs-3: 1.953rem; /* 31px — H2 */
+  --fs-4: 2.441rem; /* 39px — H1 страницы, десктоп */
+  --fs-5: 3.052rem; /* 49px — крупный штамп-заголовок, широкий десктоп */
+
+  --lh-tight: 1.15; /* заголовки */
+  --lh-normal: 1.6; /* основной текст */
+  --lh-meta: 1.3; /* мета-строки */
+
+  --tracking-tight: -0.01em; /* крупные моно-заголовки */
+  --tracking-stamp: 0.08em; /* uppercase статус-штампы, теги */
+
+  --measure: 72ch; /* макс. длина строки основного текста */
+}
+
+/* ==================================================================
+   3. ОТСТУПЫ (spacing scale) — шаг 4px
+   ================================================================== */
+:root {
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.5rem; /* 24px */
+  --space-6: 2rem; /* 32px */
+  --space-7: 3rem; /* 48px */
+  --space-8: 4rem; /* 64px */
+  --space-9: 6rem; /* 96px */
+}
+
+/* ==================================================================
+   4. ГРАНИЦЫ, ТЕНИ, РАДИУСЫ
+   Брутализм: нулевой радиус явно задан токеном (не "забыт"), жёсткие
+   тени со сдвигом без blur, границы плотные и содержательные, а не
+   декоративные волоски "для мягкости".
+   ================================================================== */
+:root {
+  --radius-0: 0; /* используется везде — задано явно, см. DESIGN.md 2.4 */
+
+  --border-hairline: 1px;
+  --border-thin: 2px;
+  --border-thick: 4px;
+
+  --line-hairline: var(--border-hairline) solid var(--c-bone-faint);
+  --line-structural: var(--border-thick) solid var(--c-bone);
+
+  /* жёсткие тени со сдвигом, без blur — "предмет лежит на поверхности" */
+  --shadow-hard-sm: 3px 3px 0 var(--c-bone);
+  --shadow-hard-md: 6px 6px 0 var(--c-bone);
+  --shadow-hard-lg: 10px 10px 0 var(--c-bone);
+  --shadow-hard-lab: 6px 6px 0 var(--c-hazard);
+  --shadow-hard-result: 6px 6px 0 var(--c-signal);
+  --shadow-hard-personal: 6px 6px 0 var(--c-marginalia);
+}
+
+/* ==================================================================
+   5. СЕТКА / КОНТЕЙНЕР / БРЕЙКПОИНТЫ
+   Брейкпоинты нельзя хранить как custom properties внутри @media —
+   ограничение CSS. Значения продублированы здесь как справка для
+   компонентных файлов, которые будут писать собственные @media:
+     --bp-sm : 480px  (крупный мобильный)
+     --bp-md : 768px  (планшет / переход мета-колонки в горизонталь)
+     --bp-lg : 1024px (десктоп / появление двухколоночного layout)
+     --bp-xl : 1440px (широкий десктоп)
+   ================================================================== */
+:root {
+  --container-max: 1200px;
+  --container-padding: var(--space-5);
+  --meta-column-width: 14ch;
+}
+
+/* ==================================================================
+   6. Z-INDEX ШКАЛА
+   ================================================================== */
+:root {
+  --z-base: 0;
+  --z-sticky-header: 10;
+  --z-overlay: 20;
+}
+
+/* ==================================================================
+   7. ГЛОБАЛЬНЫЕ БАЗОВЫЕ ПРАВИЛА
+   (Полный reset — в base/reset.css по STRUCTURE.md; здесь только то,
+   что напрямую завязано на токены системы.)
+   ================================================================== */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-0);
+  line-height: var(--lh-normal);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-mono);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 600;
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: var(--fs-4);
+}
+h2 {
+  font-size: var(--fs-3);
+}
+h3 {
+  font-size: var(--fs-2);
+}
+
+p {
+  max-width: var(--measure);
+  margin: 0 0 var(--space-4);
+}
+
+/* Видимый фокус клавиатуры — обязателен на тёмном фоне (DESIGN.md, 8) */
+:focus-visible {
+  outline: var(--border-thick) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Единственная анимация проекта: "штамп" заголовка страницы (DESIGN.md, 7) */
+@keyframes stamp-in {
+  0% {
+    transform: scale(1.03);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.page-title {
+  animation: stamp-in 120ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-title {
+    animation: none;
+  }
+}
+
+/* ==================================================================
+   8. BEM-ПРИМИТИВЫ
+   Компонент-специфичные файлы (header.css, card.css, lab-item.css,
+   post.css, model-card.css, i18n-select.css) комбинируют эти классы
+   с собственной разметкой — не дублируют цвета/отступы числами.
+   ================================================================== */
+
+/* ---------- .container / .grid ---------- */
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.grid--cards {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.grid--with-meta {
+  grid-template-columns: var(--meta-column-width) 1fr;
+  gap: var(--space-6);
+}
+
+@media (max-width: 767px) {
+  .grid--with-meta {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+/* ---------- .divider ---------- */
+.divider {
+  border: none;
+  border-top: var(--line-structural);
+  margin: var(--space-6) 0;
+}
+
+.divider--hairline {
+  border-top: var(--line-hairline);
+}
+
+/* ---------- .link ---------- */
+.link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-thin);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--c-bone-faint);
+  transition: text-decoration-color 100ms ease-out, color 100ms ease-out;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--color-accent-lab);
+  text-decoration-color: currentColor;
+}
+
+.link--result:hover,
+.link--result:focus-visible {
+  color: var(--color-accent-result);
+}
+
+.link--personal:hover,
+.link--personal:focus-visible {
+  color: var(--color-accent-personal);
+}
+
+/* ---------- .btn ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-00);
+  letter-spacing: var(--tracking-stamp);
+  padding: var(--space-3) var(--space-5);
+  background: transparent;
+  color: var(--color-text);
+  border: var(--border-thin) solid var(--color-text);
+  border-radius: var(--radius-0);
+  cursor: pointer;
+  transition: background-color 100ms ease-out, color 100ms ease-out,
+    box-shadow 100ms ease-out, transform 100ms ease-out;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  box-shadow: var(--shadow-hard-sm);
+  transform: translate(-2px, -2px);
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: translate(0, 0);
+}
+
+.btn--primary {
+  background: var(--color-accent-lab);
+  border-color: var(--color-accent-lab);
+  color: var(--c-concrete-900);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  box-shadow: var(--shadow-hard-lab);
+}
+
+.btn--ghost {
+  border-color: var(--c-bone-faint);
+  color: var(--color-text-dim);
+}
+
+/* ---------- .tag (статус-штамп) ----------
+   Текст штампа всегда тёмный (concrete-900) на цветном фоне — не
+   наоборот — контраст цветного текста на тёмном фоне на мелком кегле
+   недостаточен (см. DESIGN.md, 3.3). */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-00);
+  letter-spacing: var(--tracking-stamp);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-0);
+  line-height: var(--lh-meta);
+}
+
+.tag--outline {
+  background: transparent;
+  border: var(--border-thin) solid currentColor;
+  color: var(--color-text-dim);
+}
+
+.tag--draft,
+.tag--testing {
+  background: var(--color-accent-lab);
+  color: var(--c-concrete-900);
+}
+
+.tag--archived,
+.tag--explained,
+.tag--mastery {
+  background: var(--color-accent-result);
+  color: var(--c-concrete-900);
+}
+
+.tag--personal {
+  background: var(--color-accent-personal);
+  color: var(--c-concrete-900);
+}
+
+/* ---------- .meta (даты, id, теги-подписи) ---------- */
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-00);
+  color: var(--color-text-dim);
+  line-height: var(--lh-meta);
+}
+
+.meta > * + * {
+  margin-top: var(--space-2);
+}
+
+/* ---------- .card ----------
+   Базовый примитив. Модификаторы по разделам задают левую/верхнюю
+   акцентную линию и тип обводки — конкретное поведение каждой
+   страницы описано в DESIGN.md, раздел 6. */
+.card {
+  background: var(--color-surface);
+  padding: var(--space-5);
+  border-radius: var(--radius-0);
+}
+
+/* Лаборатория: только акцентная линия слева, без полной рамки — черновик */
+.card--lab {
+  border-left: var(--border-thick) solid var(--color-accent-lab);
+}
+
+/* Mental Models: полная рамка — завершённая, "закрытая" единица знания */
+.card--model {
+  border: var(--line-hairline);
+  border-top: var(--border-thick) solid var(--color-accent-result);
+}
+
+/* Объяснения: похоже на Лабораторию по плотности, акцент справа */
+.card--explanation {
+  border-right: var(--border-thick) solid var(--color-accent-result);
+}
+
+/* Блог: без рамки, только тонкая линия слева — "пометка на полях" */
+.card--post {
+  background: transparent;
+  padding-left: var(--space-5);
+  border-left: var(--border-thin) solid var(--color-accent-personal);
+}
+
+/* ---------- .field (инпуты, select — напр. i18n-select) ---------- */
+.field {
+  font-family: var(--font-mono);
+  font-size: var(--fs-00);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: var(--border-thin) solid var(--c-bone-faint);
+  border-radius: var(--radius-0);
+  padding: var(--space-2) var(--space-3);
+}
+
+.field:focus-visible {
+  border-color: var(--color-text);
+}

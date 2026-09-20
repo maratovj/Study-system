@@ -1,0 +1,59 @@
+@import url("./system.css");
+@import url("./base/reset.css");
+@import url("./base/typography.css");
+@import url("./components/header.css");
+@import url("./components/footer.css");
+@import url("./components/navigation.css");
+@import url("./components/card.css");
+@import url("./components/lab-item.css");
+@import url("./components/post.css");
+@import url("./components/i18n-select.css");
+@import url("./components/utilities.css");
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.app-main {
+  padding-block: var(--space-7);
+}
+
+.page {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.page__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  border-bottom: var(--line-structural);
+  padding-bottom: var(--space-4);
+}
+
+.page__title {
+  margin: 0;
+}
+
+.page__intro {
+  color: var(--color-text-dim);
+  max-width: var(--measure);
+}
+
+.page__content {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (max-width: 767px) {
+  .app-main {
+    padding-block: var(--space-6);
+  }
+
+  .page__header {
+    display: block;
+  }
+}

@@ -1,0 +1,13 @@
+.site-footer {
+  border-top: var(--line-hairline);
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-00);
+}
+
+.site-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}

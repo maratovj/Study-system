@@ -1,0 +1,46 @@
+.lab-item,
+.explanation-item {
+  align-items: start;
+}
+
+.lab-item__meta,
+.explanation-item__meta {
+  border-right: var(--line-hairline);
+  min-height: 100%;
+  padding-block: var(--space-2);
+}
+
+.lab-item__body,
+.explanation-item__body {
+  min-width: 0;
+}
+
+.lab-item__title,
+.explanation-item__title {
+  margin-bottom: var(--space-3);
+}
+
+.explanation-item__title {
+  font-size: var(--fs-3);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 767px) {
+  .lab-item__meta,
+  .explanation-item__meta {
+    border-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    min-height: 0;
+  }
+
+  .meta > * + * {
+    margin-top: 0;
+  }
+}
