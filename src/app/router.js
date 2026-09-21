@@ -13,7 +13,27 @@ function getPath() {
 
 export function getCurrentRoute() {
   const path = getPath();
-  return { name: ROUTES[path] ?? "not-found", path };
+  if (ROUTES[path]) {
+    return { name: ROUTES[path], path };
+  }
+
+  const blogPostMatch = path.match(/^\/blog\/([^/]+)$/);
+  if (blogPostMatch) {
+    let id;
+    try {
+      id = decodeURIComponent(blogPostMatch[1]);
+    } catch {
+      return { name: "not-found", path };
+    }
+
+    return {
+      name: "blog-post",
+      path,
+      id
+    };
+  }
+
+  return { name: "not-found", path };
 }
 
 export function getRoutePath(routeName) {

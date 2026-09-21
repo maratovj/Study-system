@@ -2,6 +2,23 @@
   max-width: var(--measure);
 }
 
+.post-link {
+  display: block;
+  max-width: var(--measure);
+  text-decoration: none;
+}
+
+.post-link:focus-visible {
+  outline: var(--border-thin) solid var(--color-text);
+  outline-offset: var(--space-2);
+}
+
+.post-link:hover .post__title,
+.text-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-thin);
+}
+
 .post__meta {
   display: flex;
   flex-wrap: wrap;
@@ -20,4 +37,13 @@
 
 .post p {
   margin-bottom: 0;
+}
+
+.post--detail {
+  max-width: var(--measure);
+}
+
+.text-link {
+  width: fit-content;
+  color: var(--color-accent-personal);
 }
